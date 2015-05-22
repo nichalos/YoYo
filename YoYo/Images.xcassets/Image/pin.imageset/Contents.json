@@ -6,12 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "yr-1.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "bq_jjr.png"
+      "filename" : "yr.png"
     }
   ],
   "info" : {

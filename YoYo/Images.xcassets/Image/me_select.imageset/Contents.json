@@ -6,12 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "b_me_red-1.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "me01.png"
+      "filename" : "b_me_red.png"
     }
   ],
   "info" : {

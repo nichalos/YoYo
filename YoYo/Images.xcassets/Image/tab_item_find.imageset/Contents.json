@@ -6,12 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "b_talk.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "face.png"
+      "filename" : "b_talk-1.png"
     }
   ],
   "info" : {
