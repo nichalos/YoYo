@@ -16,11 +16,8 @@ int imageHeight;
 
 @implementation DetailTableViewCell
 
-
-
 - (void)awakeFromNib {
     // Initialization code
-    
 }
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -69,14 +66,10 @@ int imageHeight;
     }
     return self;
 }
--(void)btnSelected:(UIButton *)sender{
-    
-}
 
 -(void)layoutSubviews{
     CGFloat width = 200;
     CGFloat height = self.frame.size.height-titleHeight;
-    
     self.timeLabel.frame = CGRectMake(5, self.bounds.origin.y +20, 45, 20);
     self.briefLabel.frame = CGRectMake(50, self.bounds.origin.y +10, self.frame.size.width-55, titleHeight+10);
     self.briefLabel.font = [UIFont systemFontOfSize:12];    
@@ -90,12 +83,10 @@ int imageHeight;
     NSLog(@"cell.height = %@",NSStringFromCGRect(self.frame));
 }
 
-
 + (CGFloat)heightForViewWithObject:(id)object inColumnWidth:(CGFloat)columnWidth {
     CGFloat height = 0.0;
     int Cellwidth = columnWidth -75;
     height += 90;
-    
     // Label
     NSString *caption = [object objectForKey:@"brief"]!=[NSNull null]? [object objectForKey:@"brief"]:@"";
     CGSize labelSize = CGSizeZero;
@@ -112,8 +103,15 @@ int imageHeight;
     height += imageHeight;
     NSLog(@"height = %f",height);
     
-    
     return height;
+}
++ (CGSize)getLabHeightWithText:(NSString *)text labeFont1:(UIFont *)font labeSize1:(CGSize)size{
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle.copy};
+
+    CGSize labelSize = [text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+    return labelSize;
 }
 #pragma - mark 字符串高度计算
 + (CGSize)calculateLabelHeigntWithWidth:(CGFloat)width string:(NSString *)text andFont:(UIFont *)font
@@ -124,15 +122,6 @@ int imageHeight;
     CGSize constraint = CGSizeMake(width , 1000);
     CGRect rect = [text boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName, nil] context:nil];
     return rect.size;
-}
-
-+ (CGSize)getLabHeightWithText:(NSString *)text labeFont1:(UIFont *)font labeSize1:(CGSize)size{
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle.copy};
-
-    CGSize labelSize = [text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
-    return labelSize;
 }
 
 
