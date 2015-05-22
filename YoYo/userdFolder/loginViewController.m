@@ -145,7 +145,7 @@
 }
 
 - (void)loginButtonClicked{
-    NSString *message =[NSString isPhoneNum:self.telField.text];
+    NSString *message =[self.telField.text isPhoneNum];
     if (message) {
         [SMS_MBProgressHUD showMessag:message toView:self.view];
     }else{
