@@ -234,7 +234,6 @@
 		64F7DD5A1B0C3D7E005601F2 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F7DD461B0C3D7E005601F2 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		64F7DD5B1B0C3D7E005601F2 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F7DD481B0C3D7E005601F2 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		64F7DD5C1B0C3D7E005601F2 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F7DD4A1B0C3D7E005601F2 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		64F7DD5D1B0C3D7E005601F2 /* MyMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F7DD4D1B0C3D7E005601F2 /* MyMD5.m */; };
 		64F7DD5F1B0C3E47005601F2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F7DD5E1B0C3E47005601F2 /* CFNetwork.framework */; };
 		64F7DD611B0C3E51005601F2 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F7DD601B0C3E51005601F2 /* libz.1.2.5.dylib */; };
 		64F7DD631B0C3E64005601F2 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F7DD621B0C3E64005601F2 /* libstdc++.dylib */; };
@@ -573,8 +572,6 @@
 		64F7DD481B0C3D7E005601F2 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		64F7DD491B0C3D7E005601F2 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		64F7DD4A1B0C3D7E005601F2 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		64F7DD4C1B0C3D7E005601F2 /* MyMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMD5.h; sourceTree = "<group>"; };
-		64F7DD4D1B0C3D7E005601F2 /* MyMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMD5.m; sourceTree = "<group>"; };
 		64F7DD5E1B0C3E47005601F2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		64F7DD601B0C3E51005601F2 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		64F7DD621B0C3E64005601F2 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
@@ -1140,8 +1137,6 @@
 		64F7DD4B1B0C3D7E005601F2 /* MD5 */ = {
 			isa = PBXGroup;
 			children = (
-				64F7DD4C1B0C3D7E005601F2 /* MyMD5.h */,
-				64F7DD4D1B0C3D7E005601F2 /* MyMD5.m */,
 			);
 			path = MD5;
 			sourceTree = "<group>";
@@ -1554,7 +1549,6 @@
 				8271E8C71AD804C100ADC9C5 /* LoadMoreTableFooterView.m in Sources */,
 				8271E93F1ADA434A00ADC9C5 /* WuxianYinShiBaominViewController.m in Sources */,
 				64F7DD591B0C3D7E005601F2 /* SBJSON.m in Sources */,
-				64F7DD5D1B0C3D7E005601F2 /* MyMD5.m in Sources */,
 				64F7DD5C1B0C3D7E005601F2 /* SBJsonWriter.m in Sources */,
 				64F7DD511B0C3D7E005601F2 /* ASIDownloadCache.m in Sources */,
 				64F7DD541B0C3D7E005601F2 /* ASIInputStream.m in Sources */,

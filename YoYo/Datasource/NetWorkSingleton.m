@@ -7,8 +7,7 @@
 //
 
 #import "NetWorkSingleton.h"
-
-
+#import "NSString+IsNil.h"
 #define BASEURL @"http://123.57.11.207:8080/api/"
 #define LOGIN_URL @"userinterface/login"
 #define REGIST_URL @"userinterface/userRegister"
@@ -166,22 +165,43 @@ static NetWorkSingleton *network;
 }
 
 - (NSString *)getSMScodeWithPhone:(NSString *)phoneNum{
-    [self getBaseParame];
+    NSString *returnStr = @"获取失败";
+    NSString *sn = [self getBaseParame];
     NSString *url =[NSString stringWithFormat:@"%@mb/captcha",BASEURL];
     NSDictionary * retDic = [NSDictionary dictionary];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:phoneNum forKey:@"mobileNo"];
+    [params setObject:sn forKey:@"sn"];
     retDic = [self sendSynchronous:url params:params];
-    if (retDic ) {
-        return retDic;
+    if (retDic) {
+        int status =  [[retDic objectForKey:@"status"] intValue];
+        if (status == 600) {
+            //重新获取
+        }else if(status == 200){
+            //成功
+            returnStr = nil;
+        }
     }
-    return @"获取失败";
+    return returnStr;
 }
-- (void)getBaseParame{
-    NSString *url = [NSString stringWithFormat:@"%@sn?tp=%@",BASEURL,@"123123123"];
-    NSString *dataStr = [self sendSynchronous:url andTimeOut:6000];
-    NSDictionary *data = [dataStr JSONValue];
-    
+
+
+- (NSString *)getBaseParame{
+    NSString *sn ;//= [[NSUserDefaults standardUserDefaults] objectForKey:@"DEFO_SN"];
+    if (!sn) {
+        NSString *tp = @"123123123";
+        NSString *url = [NSString stringWithFormat:@"%@sn?tp=%@",BASEURL,tp];
+        NSString *dataStr = [self sendSynchronous:url andTimeOut:6000];
+        NSDictionary *data = [dataStr JSONValue];
+        int code = [[data objectForKey:@"status"] intValue];
+        if (code == 200) {
+            NSString *snStr = [[data objectForKey:@"data"] isNull];
+            NSString *a = [NSString stringWithFormat:@"%@%@",snStr,[tp substringWithRange:NSMakeRange(2, 4)]];
+            sn = [a stringFromMD5];
+            [[NSUserDefaults standardUserDefaults] setObject:sn forKey:@"DEFO_SN"];
+        }
+    }
+    return sn;
 }
 /*
  *  @author xbm

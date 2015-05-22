@@ -16,6 +16,7 @@
 
 @interface NetWorkSingleton : NSObject
 
+@property (nonatomic, strong, readonly) NSString *defoSN;
 
 + (NetWorkSingleton *)sharedNetWork;
 
