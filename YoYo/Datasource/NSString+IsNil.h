@@ -10,7 +10,9 @@
 
 @interface NSString (IsNil)
 
-+(NSString *)isNull:(NSString *)object;
+-(NSString *)isNull;
 
-+(NSString *)isPhoneNum:(NSString *)phone;
+-(NSString *)isPhoneNum;
+
+- (NSString *) stringFromMD5;
 @end
