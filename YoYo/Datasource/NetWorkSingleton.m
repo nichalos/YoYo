@@ -177,6 +177,9 @@ static NetWorkSingleton *network;
         int status =  [[retDic objectForKey:@"status"] intValue];
         if (status == 600) {
             //重新获取
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DEFO_SN"];
+//            [self getSMScodeWithPhone:phoneNum];
+            return nil;
         }else if(status == 200){
             //成功
             returnStr = nil;
@@ -187,7 +190,7 @@ static NetWorkSingleton *network;
 
 
 - (NSString *)getBaseParame{
-    NSString *sn ;//= [[NSUserDefaults standardUserDefaults] objectForKey:@"DEFO_SN"];
+    NSString *sn = [[NSUserDefaults standardUserDefaults] objectForKey:@"DEFO_SN"];
     if (!sn) {
         NSString *tp = @"123123123";
         NSString *url = [NSString stringWithFormat:@"%@sn?tp=%@",BASEURL,tp];
