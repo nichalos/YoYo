@@ -151,8 +151,10 @@
     }else{
         [SMS_MBProgressHUD showHUDAddedTo:self.view animated:YES];
         NSString *smsCode = [[NetWorkSingleton sharedNetWork] getSMScodeWithPhone:self.telField.text];
-        AppDelegate * appdelegate = [UIApplication sharedApplication].delegate;
-        [appdelegate loginSuccess];
+        if (!smsCode) {
+            AppDelegate * appdelegate = [UIApplication sharedApplication].delegate;
+            [appdelegate loginSuccess];
+        }
     }
 
 }
