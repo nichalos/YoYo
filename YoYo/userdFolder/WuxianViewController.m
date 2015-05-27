@@ -12,9 +12,22 @@
 
 #import "DetailTableViewCell.h"
 
-@interface WuxianViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "Test2TableViewCell.h"
 
 
+#import "AllDianPingViewController.h"
+
+
+
+@interface WuxianViewController ()<UITableViewDataSource,UITableViewDelegate,imageClickedDelegate>
+
+
+{
+    int titleHeight;
+    int imageHeight;
+    // 所有的cellFrame数据
+    NSMutableArray * CellFrames;
+}
 @end
 
 @implementation WuxianViewController
@@ -23,58 +36,8 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
    
-//    UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
-//    [self.view addSubview:view];
-//    UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -20, view.frame.size.width, view.frame.size.height)];
-//    scroll.backgroundColor = [UIColor clearColor];
-//    scroll.showsHorizontalScrollIndicator = NO;
-//    scroll.showsVerticalScrollIndicator = NO;
-//    [scroll setContentSize:CGSizeMake(0, 1667)];
     
-//    NSString *name = @"";
-//    if (_infoType == 0) {
-//        name = @"个人相册";
-//    }else if(_infoType == 1){
-//        name = @"经纪人";
-//    }else{
-//        name = @"个人详情";
-//    }
-    
-//    UIImageView *bg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, scroll.frame.size.width, 1667)];
-//    bg.image = [UIImage imageNamed:name];
-//    bg.contentMode = UIViewContentModeTopLeft;
-//    bg.userInteractionEnabled = YES;
-//    bg.backgroundColor = [UIColor clearColor];
-//
-//    
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    button.frame = CGRectMake(360, 90, 45, 45);
-//    button.backgroundColor = [UIColor clearColor];
-//    button.tag = 1;
-//    if (_infoType == 0) {
-//        [button addTarget:self action:@selector(SelectionBtn:) forControlEvents:UIControlEventTouchUpInside];
-//    }
-//    [bg addSubview:button];
-    
-//    UIButton *start = [UIButton buttonWithType:UIButtonTypeCustom];
-//    start.frame = CGRectMake(10, 24, 45, 45);
-//    start.backgroundColor = [UIColor clearColor];
-//    [start addTarget:self action:@selector(SelectionBtn:) forControlEvents:UIControlEventTouchUpInside];
-//    start.tag = 0;
-//    [self.view addSubview:start];
-    
-    
-    
-//    UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
-//    button1.frame = CGRectMake(0, 1090, scroll.frame.size.width, 60);
-//    button1.backgroundColor = [UIColor clearColor];
-//    button1.tag = 2;
-//    [button1 addTarget:self action:@selector(SelectionBtn:) forControlEvents:UIControlEventTouchUpInside];
-//    [bg addSubview:button1];
-//    
-//    [scroll addSubview:bg];
-    
-//    [view addSubview:scroll];
+    titleHeight = 0;
 
     title.text = @"黄一慧";
     rightBtn.frame = CGRectMake(10, 27, 30, 30);
@@ -121,46 +84,38 @@
     photo3.clipsToBounds = YES;
     [headView addSubview:photo3];
     
-    
-    
-    
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, self.view.frame.size.width, self.view.frame.size.height-90) style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-//    self.tableView.separatorColor = [UIColor redColor];
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    [self.view addSubview:self.tableView];
-    self.items = [NSMutableArray array];
     [self loadData];
     
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height-120) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self.view addSubview:self.tableView];
     [self.tableView setTableHeaderView:headView];
-
-}
-
--(void)loadData{
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        NSString *path=[[NSBundle mainBundle] pathForResource:@"start" ofType:@"plist"];
-        self.imageArray =[NSMutableArray arrayWithContentsOfFile:path];
-        NSString * brief = @"平静的自己有颗平常的心，看惯平淡的人世，过好平安的日子。平静的自己有颗平常的心，看惯平淡的人世，过好平安的日子。平静的自己有颗平常的心，看惯平淡的人世，过好平安的日子。平静的自己有颗平常的心，看惯平淡的人世，过好平安的日子。";
-        for (int i=0; i<self.imageArray.count; i++) {
-            NSMutableDictionary * temDic = [self.imageArray objectAtIndex:i];
-            [temDic setObject:brief forKey:@"brief"];
-            [self.items addObject:temDic];
-        }
-        
-        
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
-
-    });
     
+    UIView * footerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.tableView.frame), self.view.frame.size.width, 40)];
+    footerView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:footerView];
+    
+    UIButton * dianpingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    dianpingBtn.frame = CGRectMake(20, 5, 30, 30);
+    [dianpingBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
+    [dianpingBtn addTarget:self action:@selector(dianpingBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [footerView addSubview:dianpingBtn];
+    
+    UILabel * dianpingLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(dianpingBtn.frame)+5, 5, 30, 30)];
+    dianpingLabel.text = @"点评";
+    dianpingLabel.font = [UIFont systemFontOfSize:12];
+    [footerView addSubview:dianpingLabel];
+    
+    
+//    self.dianpingLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+//    self.dianpingLabel.font = [UIFont systemFontOfSize:10];
     
 }
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
      return [self.items count];
@@ -168,29 +123,55 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary * item = [self.items objectAtIndex:indexPath.row];
-    return [DetailTableViewCell heightForViewWithObject:item inColumnWidth:self.tableView.frame.size.width];
+    CGRect rect = [UIScreen mainScreen].bounds;
+    return [DetailTableViewCell heightForViewWithObject:item inColumnWidth:rect.size.width];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString * indentifier = @"cell";
-    DetailTableViewCell *cell = (DetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    if (!cell) {
-        cell = [[DetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
-    }
 
-    NSString *name = [[self.items objectAtIndex:indexPath.row] objectForKey:@"name"];
-    cell.briefLabel.text = [[self.items objectAtIndex:indexPath.row] objectForKey:@"brief"];
-    cell.iconImageView.image = [UIImage imageNamed:name];
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString * cellIndentifer = @"reuse";
+    DetailTableViewCell *cell = (DetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIndentifer];
+    if (!cell) {
+        cell = [[DetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifer];
+    }
+    NSDictionary * item = [self.items objectAtIndex:indexPath.row];
+    
+    CGRect rect = [UIScreen mainScreen].bounds;
+    [cell fillViewWithObject:item withWidth:rect.size.width andIndexHeight:0];
+    
+    
     cell.timeLabel.text = @"5月10日";
+    cell.briefLabel.text = [[self.items objectAtIndex:indexPath.row] objectForKey:@"brief"];
+    
+    
     cell.commentTimeLabel.text = @"15分钟前";
     cell.commentCountLB.text = @"156";
     cell.praiseCountLB.text = @"56";
     
+    [cell setImageswithURLs:[item objectForKey:@"image"]];
+    cell.delegate = self;
+    
+    cell.dianpingBtn.hidden = YES;
+//    cell.dianpingLabel.text = @"点评";
+//    [cell.dianpingBtn addTarget:self action:@selector(dianpingBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+
     return cell;
 }
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return YES;
-//}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+-(void)inageBtnClicked:(UIButton *)sender{
+    NSLog(@"btn did clicked");
+}
+-(void)imageClicked:(UIButton *)sender{
+    NSLog(@"sender clicekd");
+    
+}
+-(void)dianpingBtnClicked:(UIButton *)sender{
+    AllDianPingViewController * allV = [[AllDianPingViewController alloc]init];
+    allV.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:allV animated:YES];
+}
 
 - (void)SelectionBtn:(UIButton *)button{
     switch (button.tag) {
@@ -218,6 +199,122 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+-(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+-(void)loadData{
+    self.items = [NSMutableArray array];
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+        NSString *path=[[NSBundle mainBundle] pathForResource:@"start" ofType:@"plist"];
+        self.imageArray =[NSMutableArray arrayWithContentsOfFile:path];
+        
+        NSString * brief = @"平静的自己有颗平常的心，看惯平淡的人世，过好平安的日子。平静的自己有颗平常的心，看惯平淡的人世，过好平安的日子。平静的自己有颗平常的心，看惯平淡的人世，过好平安的日子。平静的自己有颗平常的心，看惯平淡的人世，过好平安的日子。";
+        for (int i=0; i<self.imageArray.count; i++) {
+            if (i==0) {
+                NSMutableArray * tempArray = [NSMutableArray array];
+                for (int i = 684; i<685; i++) {
+                    NSString * nameStr = [NSString stringWithFormat:@"IMG_0%d.JPG",i];
+                    [tempArray addObject:nameStr];
+                }
+                NSMutableDictionary * temDic = [self.imageArray objectAtIndex:i];
+                [temDic setObject:brief forKey:@"brief"];
+                [temDic setObject:tempArray forKey:@"image"];
+                [self.items addObject:temDic];
+            }else if (i==1){
+                NSMutableArray * tempArray = [NSMutableArray array];
+                for (int i = 684; i<686; i++) {
+                    NSString * nameStr = [NSString stringWithFormat:@"IMG_0%d.JPG",i];
+                    [tempArray addObject:nameStr];
+                }
+                NSMutableDictionary * temDic = [self.imageArray objectAtIndex:i];
+                [temDic setObject:brief forKey:@"brief"];
+                [temDic setObject:tempArray forKey:@"image"];
+                [self.items addObject:temDic];
+                
+            }else if (i==2){
+                NSMutableArray * tempArray = [NSMutableArray array];
+                for (int i = 684; i<687; i++) {
+                    NSString * nameStr = [NSString stringWithFormat:@"IMG_0%d.JPG",i];
+                    [tempArray addObject:nameStr];
+                }
+                NSMutableDictionary * temDic = [self.imageArray objectAtIndex:i];
+                [temDic setObject:brief forKey:@"brief"];
+                [temDic setObject:tempArray forKey:@"image"];
+                [self.items addObject:temDic];
+            }else if (i==3){
+                NSMutableArray * tempArray = [NSMutableArray array];
+                for (int i = 684; i<688; i++) {
+                    NSString * nameStr = [NSString stringWithFormat:@"IMG_0%d.JPG",i];
+                    [tempArray addObject:nameStr];
+                }
+                NSMutableDictionary * temDic = [self.imageArray objectAtIndex:i];
+                [temDic setObject:brief forKey:@"brief"];
+                [temDic setObject:tempArray forKey:@"image"];
+                [self.items addObject:temDic];
+            }else if (i==4){
+                NSMutableArray * tempArray = [NSMutableArray array];
+                for (int i = 684; i<689; i++) {
+                    NSString * nameStr = [NSString stringWithFormat:@"IMG_0%d.JPG",i];
+                    [tempArray addObject:nameStr];
+                }
+                NSMutableDictionary * temDic = [self.imageArray objectAtIndex:i];
+                [temDic setObject:brief forKey:@"brief"];
+                [temDic setObject:tempArray forKey:@"image"];
+                [self.items addObject:temDic];
+            }else if (i==5){
+                NSMutableArray * tempArray = [NSMutableArray array];
+                for (int i = 684; i<690; i++) {
+                    NSString * nameStr = [NSString stringWithFormat:@"IMG_0%d.JPG",i];
+                    [tempArray addObject:nameStr];
+                }
+                NSMutableDictionary * temDic = [self.imageArray objectAtIndex:i];
+                [temDic setObject:brief forKey:@"brief"];
+                [temDic setObject:tempArray forKey:@"image"];
+                [self.items addObject:temDic];
+            }else{
+                NSMutableArray * tempArray = [NSMutableArray array];
+                NSString * nameStr = @"IMG_0723.JPG";
+                [tempArray addObject:nameStr];
+                
+                NSMutableDictionary * temDic = [self.imageArray objectAtIndex:i];
+                [temDic setObject:brief forKey:@"brief"];
+                [temDic setObject:tempArray forKey:@"image"];
+                [self.items addObject:temDic];
+            }
+            
+        }
+        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.tableView reloadData];
+//        });
+        
+//    });
+    
+}
+
+#pragma - mark 字符串高度计算
+-(CGSize)getLabHeightWithText:(NSString *)text labeFont1:(UIFont *)font labeSize1:(CGSize)size{
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle.copy};
+    
+    CGSize labelSize = [text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+    return labelSize;
+    
+}
+-(CGSize)calculateLabelHeigntWithWidth:(CGFloat)width string:(NSString *)text andFont:(UIFont *)font
+{
+    if (text.length == 0 || [text isEqualToString:@" "]){
+        return CGRectZero.size;
+    }
+    CGSize constraint = CGSizeMake(width , 1000);
+    CGRect rect = [text boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName, nil] context:nil];
+    return rect.size;
 }
 
 - (void)didReceiveMemoryWarning {

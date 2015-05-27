@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface FriendCollectionViewCell : UICollectionViewCell{
-    CALayer *layer;
+    UIImageView *icon;
     UILabel *name;
 }
 - (void) setImageNmae:(NSString *)image setName:(NSString*)nameStr;

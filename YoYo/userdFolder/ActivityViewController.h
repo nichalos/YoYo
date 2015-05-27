@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-@interface ActivityViewController : BaseViewController
+#import "DetailTableViewCell.h"
+
+@interface ActivityViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,imageClickedDelegate>
+
+
+@property (nonatomic, strong) UITableView * tableView;
+@property(nonatomic, strong) NSMutableArray *items;
+@property(nonatomic, strong) NSMutableArray *imageArray;
 
 @end

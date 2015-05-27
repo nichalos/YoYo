@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface PersonViewController : BaseViewController
+@interface PersonViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
+
+
+
+@property (nonatomic, strong) UITableView * tableView;
+@property (nonatomic, strong) NSDictionary * personalDic;
+@property (nonatomic, strong) NSArray * mySetArray;
+@property (nonatomic, strong) NSArray * mysetIconArray;
 
 @end

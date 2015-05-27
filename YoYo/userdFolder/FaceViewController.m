@@ -36,7 +36,7 @@
     [self.mainCollectionView registerClass:[AgentCollectionViewCell class] forCellWithReuseIdentifier:@"CELL"];
     self.mainCollectionView.delegate = self;
     self.mainCollectionView.dataSource = self;
-    self.mainCollectionView.backgroundColor = [UIColor clearColor];
+    self.mainCollectionView.backgroundColor = [UIColor colorWithRed:232.0/255.0f green:232.0/255.0f blue:232.0/255.0f alpha:1];
     self.mainCollectionView.scrollEnabled = YES;
     self.mainCollectionView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.mainCollectionView];
@@ -47,7 +47,7 @@
 {
     self.imageArray = [NSMutableArray array];
     for (int i = 684; i<783; i++) {
-        NSString * nameStr = [NSString stringWithFormat:@"IMG_0%d.jpg",i];
+        NSString * nameStr = [NSString stringWithFormat:@"IMG_0%d.JPG",i];
         [self.imageArray addObject:nameStr];
     }
     
@@ -111,6 +111,7 @@
     
     AgentDetailViewController * temp = [[AgentDetailViewController alloc] init];
     temp.nameStr = nameStr;
+//    temp.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:temp animated:YES];
 }
 

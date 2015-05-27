@@ -23,7 +23,6 @@
     [self.view addSubview:bg];
     
     UIImageView *imageBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 74)];
-//    imageBg.image = [UIImage imageNamed:@"nav_background"];
     imageBg.backgroundColor = [UIColor whiteColor];
     imageBg.userInteractionEnabled = YES;
     [self.view addSubview:imageBg];

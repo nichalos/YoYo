@@ -178,6 +178,7 @@ static int count = 0;
 //                [alert show];
 //            }else{
 //                BasicInfoViewController * basicInvoVC = [[BasicInfoViewController alloc]init];
+//                basicInvoVC.userModel = self.userData;
 //                [self presentViewController:basicInvoVC animated:YES completion:nil];
 //            }
 //        }];
@@ -197,13 +198,13 @@ static int count = 0;
         statusBarHeight=20;
     }
     
-    self.view.backgroundColor = [UIColor colorWithRed:252/255.0f green:91/255.0f blue:84/255.0 alpha:1.0f];
-    
-    UIButton *start = [UIButton buttonWithType:UIButtonTypeCustom];
-    start.frame = CGRectMake(10, 30, 40, 40);
-    [start setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [start addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:start];
+    self.view.backgroundColor = [UIColor colorWithRed:255/255.0f green:70/255.0f blue:60/255.0 alpha:1.0f];
+    NSLog(@"%@",self.view);
+//    UIButton *start = [UIButton buttonWithType:UIButtonTypeCustom];
+//    start.frame = CGRectMake(10, 30, 40, 40);
+//    [start setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [start addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:start];
     
     
     UILabel * info1Label = [[UILabel alloc] init];
@@ -242,12 +243,13 @@ static int count = 0;
     self.getCodeBtn=[UIButton buttonWithType:UIButtonTypeSystem];
 //    [nextBtn setTitle:NSLocalizedString(@"nextbtn", nil) forState:UIControlStateNormal];
     [self.getCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-    NSString *icon = [NSString stringWithFormat:@"smssdk.bundle/button4.png"];
-    [self.getCodeBtn setBackgroundImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
+
+//    NSString *icon = [NSString stringWithFormat:@"smssdk.bundle/button4.png"];
+//    [self.getCodeBtn setBackgroundImage:[UIImage imageNamed:icon] forState:UIControlStateNormal];
     self.getCodeBtn.frame=CGRectMake(CGRectGetMaxX(self.verifyCodeField.frame) +10, CGRectGetMinY(self.verifyCodeField.frame), 100, CGRectGetHeight(self.verifyCodeField.frame));
     [self.getCodeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.getCodeBtn addTarget:self action:@selector(nextStep) forControlEvents:UIControlEventTouchUpInside];
-    self.getCodeBtn.backgroundColor = [UIColor greenColor];
+    self.getCodeBtn.backgroundColor = [UIColor clearColor];
     self.getCodeBtn.layer.cornerRadius = 5.0f;
     [self.view addSubview:self.getCodeBtn];
     
@@ -255,81 +257,83 @@ static int count = 0;
     _timeLabel.frame=CGRectMake(CGRectGetMaxX(self.verifyCodeField.frame) +10, CGRectGetMinY(self.verifyCodeField.frame), 100, CGRectGetHeight(self.verifyCodeField.frame));
     _timeLabel.numberOfLines = 0;
     _timeLabel.textAlignment = NSTextAlignmentCenter;
+    _timeLabel.textColor = [UIColor whiteColor];
     _timeLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
     _timeLabel.text=NSLocalizedString(@"timelabel", nil);
-    _timeLabel.backgroundColor = [UIColor orangeColor];
+    _timeLabel.backgroundColor = self.view.backgroundColor;
     _timeLabel.layer.cornerRadius = 5.0f;
     [self.view addSubview:_timeLabel];
     
     self.repeatSMSBtn=[UIButton buttonWithType:UIButtonTypeSystem];
     _repeatSMSBtn.frame=CGRectMake(CGRectGetMaxX(self.verifyCodeField.frame) +10, CGRectGetMinY(self.verifyCodeField.frame), 100, CGRectGetHeight(self.verifyCodeField.frame) );
     [_repeatSMSBtn setTitle:NSLocalizedString(@"repeatsms", nil) forState:UIControlStateNormal];
+    [_repeatSMSBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_repeatSMSBtn addTarget:self action:@selector(CannotGetSMS) forControlEvents:UIControlEventTouchUpInside];
-    _repeatSMSBtn.backgroundColor = [UIColor greenColor];
+    _repeatSMSBtn.backgroundColor = self.view.backgroundColor;
     _repeatSMSBtn.layer.cornerRadius = 5.0f;
     _repeatSMSBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:_repeatSMSBtn];
     
     
-    self.pswField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.verifyCodeField.frame), CGRectGetMaxY(self.verifyCodeField.frame)+5, self.view.frame.size.width-20, CGRectGetHeight(self.verifyCodeField.frame))];
-    self.pswField.placeholder = @"请输入密码";
-    self.pswField.borderStyle = UITextBorderStyleRoundedRect;
-    self.pswField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [self.view addSubview:self.pswField];
-    
-    agentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    agentBtn.frame = CGRectMake(CGRectGetMinX(self.pswField.frame)+15, CGRectGetMaxY(self.pswField.frame)+20, 26, 26);
-    agentBtn.layer.cornerRadius = 13.0f;
-    [agentBtn setBackgroundColor:[UIColor whiteColor]];
-    agentBtn.tag = 9010;
-    [agentBtn addTarget:self action:@selector(positionBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:agentBtn];
-    
-    UILabel * agentLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(agentBtn.frame)+5, CGRectGetMinY(agentBtn.frame), 80, 25)];
-    agentLabel.text = @"经纪人";
-    agentLabel.textColor = [UIColor whiteColor];
-    agentLabel.font = [UIFont systemFontOfSize:23];
-    agentLabel.textAlignment = NSTextAlignmentCenter;
-//    agentLabel.backgroundColor = [UIColor redColor];
-    [self.view addSubview:agentLabel];
-    
-    actorBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    actorBtn.frame = CGRectMake(CGRectGetMaxX(agentLabel.frame)+5, CGRectGetMinY(agentLabel.frame), 26, 26);
-    actorBtn.layer.cornerRadius = 13.0f;
-    [actorBtn setBackgroundColor:[UIColor whiteColor]];
-    actorBtn.tag = 9011;
-    [actorBtn addTarget:self action:@selector(positionBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:actorBtn];
-    
-    UILabel * actorLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(actorBtn.frame)+5, CGRectGetMinY(actorBtn.frame), 55, 25)];
-    actorLabel.text = @"演员";
-    actorLabel.textColor = [UIColor whiteColor];
-    actorLabel.font = [UIFont systemFontOfSize:23];
-    actorLabel.textAlignment = NSTextAlignmentCenter;
-//    actorLabel.backgroundColor = [UIColor redColor];
-    [self.view addSubview:actorLabel];
-    
-    personBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    personBtn.frame = CGRectMake(CGRectGetMaxX(actorLabel.frame)+5, CGRectGetMinY(actorLabel.frame), 26, 26);
-    personBtn.layer.cornerRadius = 13.0f;
-    [personBtn setBackgroundColor:[UIColor whiteColor]];
-    personBtn.tag = 9012;
-    [personBtn addTarget:self action:@selector(positionBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:personBtn];
-    
-    UILabel * personLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(personBtn.frame)+5, CGRectGetMinY(personBtn.frame), 95, 25)];
-    personLabel.text = @"个人用户";
-    personLabel.textColor = [UIColor whiteColor];
-    personLabel.font = [UIFont systemFontOfSize:23];
-    personLabel.textAlignment = NSTextAlignmentCenter;
-//    personLabel.backgroundColor = [UIColor redColor];
-    [self.view addSubview:personLabel];
+//    self.pswField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.verifyCodeField.frame), CGRectGetMaxY(self.verifyCodeField.frame)+5, self.view.frame.size.width-20, CGRectGetHeight(self.verifyCodeField.frame))];
+//    self.pswField.placeholder = @"请输入密码";
+//    self.pswField.borderStyle = UITextBorderStyleRoundedRect;
+//    self.pswField.clearButtonMode = UITextFieldViewModeWhileEditing;
+//    [self.view addSubview:self.pswField];
+//    
+//    agentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    agentBtn.frame = CGRectMake(CGRectGetMinX(self.pswField.frame)+15, CGRectGetMaxY(self.pswField.frame)+20, 26, 26);
+//    agentBtn.layer.cornerRadius = 13.0f;
+//    [agentBtn setBackgroundColor:[UIColor whiteColor]];
+//    agentBtn.tag = 9010;
+//    [agentBtn addTarget:self action:@selector(positionBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:agentBtn];
+//    
+//    UILabel * agentLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(agentBtn.frame)+5, CGRectGetMinY(agentBtn.frame), 80, 25)];
+//    agentLabel.text = @"经纪人";
+//    agentLabel.textColor = [UIColor whiteColor];
+//    agentLabel.font = [UIFont systemFontOfSize:23];
+//    agentLabel.textAlignment = NSTextAlignmentCenter;
+////    agentLabel.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:agentLabel];
+//    
+//    actorBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    actorBtn.frame = CGRectMake(CGRectGetMaxX(agentLabel.frame)+5, CGRectGetMinY(agentLabel.frame), 26, 26);
+//    actorBtn.layer.cornerRadius = 13.0f;
+//    [actorBtn setBackgroundColor:[UIColor whiteColor]];
+//    actorBtn.tag = 9011;
+//    [actorBtn addTarget:self action:@selector(positionBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:actorBtn];
+//    
+//    UILabel * actorLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(actorBtn.frame)+5, CGRectGetMinY(actorBtn.frame), 55, 25)];
+//    actorLabel.text = @"演员";
+//    actorLabel.textColor = [UIColor whiteColor];
+//    actorLabel.font = [UIFont systemFontOfSize:23];
+//    actorLabel.textAlignment = NSTextAlignmentCenter;
+////    actorLabel.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:actorLabel];
+//    
+//    personBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    personBtn.frame = CGRectMake(CGRectGetMaxX(actorLabel.frame)+5, CGRectGetMinY(actorLabel.frame), 26, 26);
+//    personBtn.layer.cornerRadius = 13.0f;
+//    [personBtn setBackgroundColor:[UIColor whiteColor]];
+//    personBtn.tag = 9012;
+//    [personBtn addTarget:self action:@selector(positionBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:personBtn];
+//    
+//    UILabel * personLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(personBtn.frame)+5, CGRectGetMinY(personBtn.frame), 95, 25)];
+//    personLabel.text = @"个人用户";
+//    personLabel.textColor = [UIColor whiteColor];
+//    personLabel.font = [UIFont systemFontOfSize:23];
+//    personLabel.textAlignment = NSTextAlignmentCenter;
+////    personLabel.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:personLabel];
     
     UIButton * confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     NSString * titleStr = NSLocalizedString(@"confirmBtn", nil);
     [confirmBtn setTitle: titleStr forState:UIControlStateNormal];
     [confirmBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    confirmBtn.frame = CGRectMake(CGRectGetMinX(self.verifyCodeField.frame), CGRectGetMaxY(agentBtn.frame)+25, self.view.frame.size.width-20, 40+statusBarHeight/4);
+    confirmBtn.frame = CGRectMake(CGRectGetMinX(self.verifyCodeField.frame), CGRectGetMaxY(_repeatSMSBtn.frame)+25, self.view.frame.size.width-20, 40+statusBarHeight/4);
     confirmBtn.backgroundColor = [UIColor whiteColor];
     confirmBtn.layer.cornerRadius = 5.0f;
     [confirmBtn addTarget:self action:@selector(confirmBtnClicked:) forControlEvents:UIControlEventTouchUpInside];

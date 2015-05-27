@@ -12,7 +12,6 @@
 @interface WuxianViewController : BaseViewController
 
 
-
 @property (nonatomic,assign) int infoType;
 
 @property (nonatomic, strong) UITableView * tableView;

@@ -13,6 +13,11 @@
 #import "loginViewController.h"
 #import "NewViewController.h"
 #import "WuxianViewController.h"
+
+#import "PersonCell.h"
+#import "FinishInfoViewController.h"
+#import "StarWishViewController.h"
+
 @interface PersonViewController (){
     NSArray *group;
 }
@@ -24,93 +29,106 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     title.text = @"我";
-    bg.frame = CGRectMake(0, 65, self.view.bounds.size.width, self.view.bounds.size.height);
-    bg.image = [UIImage imageNamed:@"me"];
+//    bg.frame = CGRectMake(0, 65, self.view.bounds.size.width, self.view.bounds.size.height);
+//    bg.image = [UIImage imageNamed:@"me"];
 
-    rightBtn.frame = CGRectMake(self.view.frame.size.width-60, 30, 40, 40);
-    [rightBtn setImage:[UIImage imageNamed:@"setting"] forState:UIControlStateNormal];
-    rightBtn.tag = 0;
-    [rightBtn addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
+//    rightBtn.frame = CGRectMake(self.view.frame.size.width-60, 30, 40, 40);
+//    [rightBtn setImage:[UIImage imageNamed:@"setting"] forState:UIControlStateNormal];
+//    rightBtn.tag = 0;
+//    [rightBtn addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0, 177, self.view.frame.size.width, 50);
-    button.backgroundColor = [UIColor clearColor];
-    button.tag = 1;
-    [button addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    [self loadMyInfoData];
     
-    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button2.frame = CGRectMake(0, 230, self.view.frame.size.width, 53);
-    button2.backgroundColor = [UIColor clearColor];
-    button2.tag = 2;
-    [button2 addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button2];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 75, self.view.frame.size.width, self.view.frame.size.height-75) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setScrollEnabled:NO];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.userInteractionEnabled = YES;
+    [self.view addSubview:self.tableView];
     
-    UIButton *button3 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button3.frame = CGRectMake(0, 285, self.view.frame.size.width, 63);
-    button3.backgroundColor = [UIColor clearColor];
-    button3.tag = 3;
-    [button3 addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button3];
-    
-    UIButton *button4 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button4.frame = CGRectMake(0, 350, self.view.frame.size.width, 60);
-    button4.backgroundColor = [UIColor clearColor];
-    button4.tag = 4;
-    [button4 addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button4];
-    
-    UIButton *button5 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button5.frame = CGRectMake(0, 415, self.view.frame.size.width, 55);
-    button5.backgroundColor = [UIColor clearColor];
-    button5.tag = 5;
-    [button5 addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button5];
-    
-    UIButton *button6 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button6.frame = CGRectMake(0, 475, self.view.frame.size.width, 50);
-    button6.backgroundColor = [UIColor clearColor];
-    button6.tag = 6;
-    [button6 addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button6];
-
-    UIButton *button8 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button8.frame = CGRectMake(0, 525, self.view.frame.size.width, 55);
-    button8.backgroundColor = [UIColor clearColor];
-    button8.tag = 7;
-    [button8 addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button8];
-    
-    UIButton *button9 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button9.frame = CGRectMake(self.view.frame.size.width-100, 95, 80, 50);
-    button9.backgroundColor = [UIColor clearColor];
-    [button9 setTitle:@"退出" forState:UIControlStateNormal];
-    [button9 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button9.tag = 8;
-//    button9.layer.borderColor = [UIColor colorWithRed:252/255.0f green:91/255.0f blue:84/255.0f alpha:1].CGColor;
-//    button9.layer.borderWidth = 2;
-//    button9.layer.cornerRadius = 6;
-//    button9.layer.masksToBounds = YES;
-    [button9 addTarget:self action:@selector(selectView:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button9];
-    
-    UILabel *verson = [[UILabel alloc] initWithFrame:CGRectMake(268, 655, 70, 40)];
-    verson.text = @"最新版本";
-    verson.font = [UIFont systemFontOfSize:17];
-    [self.view addSubview:verson];
-
-    UILabel *versonNum = [[UILabel alloc] initWithFrame:CGRectMake(350, 655, 70, 40)];
-    versonNum.text = @"V1.0";
-    versonNum.textColor = BASE_COLOR;
-    versonNum.font = [UIFont systemFontOfSize:19];
-    [self.view addSubview:versonNum];
-    
-//    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:@"LOGIN"];
-//    if (!islogin) {
-//        loginViewController *temp = [[loginViewController alloc] init];
-//        [self.navigationController pushViewController:temp animated:NO];
-//    }
+    UIView * view = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = view;
 }
+-(void)loadMyInfoData{
+    NSString *path=[[NSBundle mainBundle] pathForResource:@"MySet" ofType:@"plist"];
+    self.mySetArray =[NSArray arrayWithContentsOfFile:path];
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return self.mySetArray.count;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [[self.mySetArray objectAtIndex:section] count];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return 100;
+    }else{
+        return 40;
+    }
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 20;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString * cellIndentifer = @"reuse";
+    PersonCell *cell = (PersonCell *)[tableView dequeueReusableCellWithIdentifier:cellIndentifer];
+    if (!cell) {
+        cell = [[PersonCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIndentifer];
+    }
+    NSArray * arrayIndex = [self.mySetArray objectAtIndex:indexPath.section];
+    NSDictionary * item = [arrayIndex objectAtIndex:indexPath.row];
+    cell.iconImage.image = [UIImage imageNamed:[item objectForKey:@"icon"]];
+   
+    
+    if (indexPath.section ==0) {
+        cell.nameLabel.text = [item objectForKey:@"name"];
+        cell.contentLabel.text = [item objectForKey:@"position"];
+        cell.contentLabel.textColor = [UIColor redColor];
+    }else{
+        cell.iconImage.frame = CGRectMake(10, 10, 20, 20);
+        cell.contentLabel.text = [item objectForKey:@"name"];
+        cell.contentLabel.frame = CGRectMake(CGRectGetMaxX(cell.iconImage.frame)+5, 10, cell.frame.size.width - 40, 20);
+    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        FinishInfoViewController * finishVC = [[FinishInfoViewController alloc] init];
+        NSDictionary * dic = [[self.mySetArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        finishVC.myInfoArray = [dic objectForKey:@"child"];
+        finishVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:finishVC animated:YES];
+    }else if (indexPath.section == 2 && indexPath.row == 1){
+        MoreViewController *temp = [[MoreViewController alloc] init];
+        temp.bgName = @"明星祝福";
+        temp.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:temp animated:YES];
+    }else if (indexPath.section == 3){
+        WuxianViewController * photoVC = [[WuxianViewController alloc] init];
+        photoVC.name = @"IMG_0746.jpg";
+        photoVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:photoVC animated:YES];
+    }else if (indexPath.section == 2 && indexPath.row ==0){
+        MoreViewController *temp = [[MoreViewController alloc] init];
+        temp.bgName = @"影视基地";
+        temp.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:temp animated:YES];
+    }
+}
+-(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];

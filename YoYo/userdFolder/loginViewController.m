@@ -99,6 +99,8 @@
     [button3 addTarget:self action:@selector(SelectionBtn:) forControlEvents:UIControlEventTouchUpInside];
     [bg addSubview:button3];
     
+    self.telField.text = @"13331078676";
+    
 }
 
 - (void)SelectionBtn:(UIButton *)button{
@@ -145,6 +147,7 @@
 }
 
 - (void)loginButtonClicked{
+    
     NSString *message =[self.telField.text isPhoneNum];
     if (message) {
         [SMS_MBProgressHUD showMessag:message toView:self.view];

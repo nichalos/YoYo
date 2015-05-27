@@ -13,9 +13,7 @@
 #import "WuxianViewController.h"
 #import "loginViewController.h"
 @interface StartViewController (){
-    NSArray *imageArray;
-    UIImageView *titleImage;
-    int count;
+
     UIButton *leftBtn;
     dataType myDataType;
 }
@@ -31,7 +29,7 @@
     leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame = CGRectMake(self.view.frame.size.width/2-80, 30, 70, 40);
     [leftBtn addTarget:self action:@selector(SelectionBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [leftBtn setTitle:@"星颜" forState:UIControlStateNormal];
+    [leftBtn setTitle:@"演员" forState:UIControlStateNormal];
     leftBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
     leftBtn.layer.masksToBounds = YES;
     leftBtn.layer.cornerRadius = 6;
@@ -44,7 +42,7 @@
     rightBtn.frame = CGRectMake(self.view.frame.size.width/2+10, 30, 70, 40);
     rightBtn.tag = 1;
     [rightBtn addTarget:self action:@selector(SelectionBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setTitle:@"YO友" forState:UIControlStateNormal];
+    [rightBtn setTitle:@"星友" forState:UIControlStateNormal];
     [rightBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
     rightBtn.layer.masksToBounds = YES;
@@ -52,17 +50,9 @@
     [rightBtn setBackgroundColor:[UIColor clearColor]];
     myDataType = enumYanzi;
     
-    count = -1;
-    imageArray = [NSArray arrayWithObjects:@"deng",@"sunqian",@"yuanq", nil];
-    
-    titleImage = [[UIImageView alloc] initWithFrame:CGRectMake(4, 82, 406, 170)];
-    
-    [self.view addSubview:titleImage];
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(changeNotice) userInfo:nil repeats:YES];
-    [timer fire];
-    
+
     self.items = [NSMutableArray array];
-    collectionView = [[PullPsCollectionView alloc] initWithFrame:CGRectMake(0, 255, self.view.frame.size.width, self.view.frame.size.height-304)];
+    collectionView = [[PullPsCollectionView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, self.view.frame.size.height-130)];
     [self.view addSubview:collectionView];
     collectionView.collectionViewDelegate = self;
     collectionView.collectionViewDataSource = self;
@@ -85,14 +75,6 @@
     if(!collectionView.pullTableIsRefreshing) {
         collectionView.pullTableIsRefreshing = YES;
         [self performSelector:@selector(refreshTable) withObject:nil afterDelay:0];
-    }
-}
-
-- (void)changeNotice{
-    count++;
-    titleImage.image =[UIImage imageNamed:imageArray[count%3]];
-    if (count == 300) {
-        count = 0;
     }
 }
 
@@ -211,6 +193,7 @@
 - (void)collectionView:(PSCollectionView *)collectionView didSelectView:(PSCollectionViewCell *)view atIndex:(NSInteger)index {
     WuxianViewController *temp = [[WuxianViewController alloc] init];
     temp.hidesBottomBarWhenPushed = YES;
+    temp.name = [[self.items objectAtIndex:index] objectForKey:@"name"];
     temp.infoType = 2;
     [self.navigationController pushViewController:temp animated:YES];
 }

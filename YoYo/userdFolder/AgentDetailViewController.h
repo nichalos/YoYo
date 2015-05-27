@@ -13,6 +13,7 @@
 
 
 @property (nonatomic, strong) NSString * nameStr;
+
  
 @property (nonatomic, strong) UICollectionView * actorCollectionView;
 @property (nonatomic, strong) UICollectionView * friendCollectionView;

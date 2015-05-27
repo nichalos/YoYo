@@ -14,19 +14,16 @@
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        layer = [[CALayer alloc] init];
-        layer.backgroundColor = [UIColor redColor].CGColor;
-        layer.position = CGPointMake(frame.size.width/2, frame.size.height/2);
-        layer.bounds = CGRectMake(0, 0, frame.size.width-10, frame.size.width-15);
-        layer.cornerRadius = 5.0f;
-        layer.masksToBounds = YES;
-        layer.borderWidth = 2;
-        layer.borderColor = [UIColor whiteColor].CGColor;
-        [self.contentView.layer addSublayer:layer];
+        icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, frame.size.width, frame.size.width)];
+        icon.backgroundColor = [UIColor clearColor];
+        icon.layer.cornerRadius = 4;
+        icon.layer.masksToBounds = YES;
+        [self.contentView addSubview:icon];
+        
         name = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height-10, frame.size.width, 10)];
         name.textAlignment = NSTextAlignmentCenter;
         name.backgroundColor = [UIColor clearColor];
-        name.textColor = [UIColor darkGrayColor];
+        name.textColor = [UIColor blackColor];
         name.font = [UIFont systemFontOfSize:10];
         [self.contentView addSubview:name];
     }
@@ -34,8 +31,7 @@
 }
 
 - (void) setImageNmae:(NSString *)image setName:(NSString *)nameStr{
-    UIImage *icon = [UIImage imageNamed:image];
-    [layer setContents:(id)icon.CGImage];
+   icon.image = [UIImage imageNamed:image];
     name.text = nameStr;
 }
 

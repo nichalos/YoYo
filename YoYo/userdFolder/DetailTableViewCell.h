@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol imageClickedDelegate <NSObject>
+-(void)imageClicked:(UIButton *)sender;
+@end
+
+
 @interface DetailTableViewCell : UITableViewCell
 
 
-@property (nonatomic, strong) id object;
+@property (nonatomic, strong) NSDictionary * object;
 
 @property (nonatomic, strong) UILabel * timeLabel;
 @property (nonatomic, strong) UILabel * briefLabel;
@@ -23,11 +28,19 @@
 @property (nonatomic, strong) UIButton * praiseBtn;
 @property (nonatomic, strong) UILabel * praiseCountLB;
 
+@property (nonatomic, strong) NSMutableArray * imageArray;
+@property (nonatomic, strong) NSArray * urlArray;
+
+@property (nonatomic, assign) id <imageClickedDelegate> delegate;
+@property (nonatomic, strong) UIButton * dianpingBtn;
+@property (nonatomic, strong) UILabel * dianpingLabel;
 
 
++ (CGFloat)heightForViewWithObject:(NSDictionary *)object inColumnWidth:(CGFloat)columnWidth;
+- (CGSize)getLabHeightWithText:(NSString *)text labeFont1:(UIFont *)font labeSize1:(CGSize)size;
++(CGSize)getLabHeightWithText:(NSString *)text labeFont1:(UIFont *)font labeSize1:(CGSize)size;
 
-+ (CGFloat)heightForViewWithObject:(id)object inColumnWidth:(CGFloat)columnWidth;
-+ (CGSize)getLabHeightWithText:(NSString *)text labeFont1:(UIFont *)font labeSize1:(CGSize)size;
-- (CGSize)calculateLabelHeigntWithWidth:(CGFloat)width string:(NSString *)text andFont:(UIFont *)font;
+-(void)setImageswithURLs:(NSArray *)urls;
+- (void)fillViewWithObject:(NSDictionary *)object withWidth:(CGFloat)width andIndexHeight:(CGFloat)indexHeight;
 
 @end
