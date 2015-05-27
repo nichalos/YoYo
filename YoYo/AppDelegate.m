@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import <SMS_SDK/SMS_SDK.h>
-#import "loginViewController.h"
+#import "RegViewController.h"
 #import "MyViewController.h"
 @interface AppDelegate ()
 
@@ -38,7 +38,7 @@
 }
 -(void)logOut{
      [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"LOGIN"];
-    loginViewController * loginVC = [[loginViewController alloc] init];
+    RegViewController * loginVC = [[RegViewController alloc] init];
     UINavigationController * navigationVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
     self.window.rootViewController = navigationVC;
     navigationVC.navigationBarHidden = YES;

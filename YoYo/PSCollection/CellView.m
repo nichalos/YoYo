@@ -36,8 +36,7 @@
     int objectHeight = [[model objectForKey:@"height"] floatValue];
     int scaledHeight = floorf(objectHeight / (objectWidth / width));
     self.picView.frame = CGRectMake(left, top, width, scaledHeight);
-    _pin.frame = CGRectMake(10, scaledHeight-40, 40, 40);
-    _name.frame = CGRectMake(45, scaledHeight-40, 100, 40);
+    _name.frame = CGRectMake(15, scaledHeight-40, 100, 40);
     _cont.frame = CGRectMake(0, scaledHeight, width, 65);
     self.info.frame = CGRectMake(0, 0, width, 40);
     self.count.frame = CGRectMake(width-50, 40, 40, 20);

@@ -19,7 +19,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     UIImageView *bg = [[UIImageView alloc] initWithFrame:self.view.bounds];
     bg.image = [UIImage imageNamed:_bgName];
-    bg.contentMode = UIViewContentModeTopLeft;
+    bg.contentMode = UIViewContentModeScaleAspectFit;
     bg.backgroundColor = [UIColor clearColor];
     [self.view addSubview:bg];
     

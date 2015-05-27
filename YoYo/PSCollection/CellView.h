@@ -13,7 +13,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *name;
 @property (retain, nonatomic) IBOutlet UILabel *info;
 @property (retain, nonatomic) IBOutlet UILabel *count;
-@property (retain, nonatomic) IBOutlet UIButton *pin;
 @property (retain, nonatomic) IBOutlet UIView *cont;
 @property (weak, nonatomic) IBOutlet UIButton *zan;
 @end
